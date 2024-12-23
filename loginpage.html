@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEM-VINDO(A) AO MUNDO DO MOISÉS</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .login-container {
+            background-color: #f4f4f4;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 80%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .info-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 60%;
+            text-align: center;
+        }
+
+        .info-message p {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .info-message button {
+            background-color: red;
+            width: auto;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .music-button {
+            background-color: #ffa500;
+            margin-top: 15px;
+            font-size: 18px;
+            border-radius: 5px;
+            width: 80%;
+        }
+
+        /* Instagram Link Position */
+        .instagram-link {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .instagram-link:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .login-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .info-message {
+                width: 80%;
+            }
+
+            .music-button {
+                width: 90%;
+            }
+
+            button {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h1>BEM-VINDO(A) AO MUNDO DO MOISÉS</h1>
+    <input type="text" id="username" placeholder="Nome de Usuário" required>
+    <input type="password" id="password" placeholder="Senha" required>
+    <button onclick="login()">Prosseguir</button>
+    <button class="music-button" onclick="toggleMusic()">Pausar/Tocar Música Tema</button>
+    <button onclick="showInfo()">Info</button>
+</div>
+
+<div class="info-message" id="infoMessage">
+    <p>Olá, bem-vindo amigo ou amiga, este é um site que eu criei para aqui hospedar algumas cartas que escrevi a você. Eu não sou um criador de site, não tenho experiência com isso, mas espero que você goste. Então, tenha uma boa experiência e espero que dê tudo certo. Deus abençoe!</p>
+    <button onclick="closeInfo()">Fechar</button>
+</div>
+
+<!-- Instagram Link -->
+<a href="https://www.instagram.com/soumoiss/" class="instagram-link" target="_blank">Instagram do Criador</a>
+
+<audio id="themeMusic" src="song_tema.mp3" loop></audio>
+
+<script>
+    const users = {
+        'Poetinha': 'poetinha@123',
+        'Patati': 'patati@123',
+        'Misol': 'misol@123',
+        'Flor': 'flor@123',
+        'Prin': 'prin@123',
+        'BobZ': 'bobz@123'
+    };
+
+    let musicPlaying = false;
+    const themeMusic = document.getElementById('themeMusic');
+
+    function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (users[username] === password) {
+            sessionStorage.setItem('username', username);  // Armazena o nome do usuário
+            alert('Login bem-sucedido!');
+            window.location.href = 'home.html'; // Redireciona para a página home.html
+        } else {
+            alert('Usuário ou senha incorretos!');
+        }
+    }
+
+    function showInfo() {
+        document.getElementById('infoMessage').style.display = 'block';
+    }
+
+    function closeInfo() {
+        document.getElementById('infoMessage').style.display = 'none';
+    }
+
+    function toggleMusic() {
+        if (musicPlaying) {
+            themeMusic.pause();
+            musicPlaying = false;
+        } else {
+            themeMusic.play();
+            musicPlaying = true;
+        }
+    }
+</script>
+
+</body>
+</html>

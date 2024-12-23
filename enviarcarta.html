@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar Carta</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .user-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .user-item {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            width: 150px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+
+        .user-item p {
+            margin-top: 10px;
+            color: #4CAF50;
+            cursor: pointer;
+        }
+
+        .send-message {
+            width: 80%;
+            max-width: 600px;
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .send-message textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .confirmation-message {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+
+        .back-home-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .back-home-button:hover {
+            background-color: #e53935;
+        }
+
+        .back-button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .back-button:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Página de selecionar usuários -->
+<div class="user-list" id="userList">
+    <!-- Botão para voltar para a página inicial -->
+    <button class="back-home-button" onclick="window.location.href='home.html'">Voltar para a Home</button>
+</div>
+
+<!-- Página de escrever carta -->
+<div class="send-message" id="sendMessage" style="display:none;">
+    <h2>Escreva sua carta</h2>
+    <textarea id="messageText" placeholder="Escreva sua carta aqui..."></textarea>
+    <button onclick="sendMessage()">Enviar Carta</button>
+    <!-- Botão para voltar para a página de seleção de usuários -->
+    <button class="back-button" onclick="goBackToUserList()">Voltar para Seleção de Usuários</button>
+</div>
+
+<!-- Mensagem de confirmação -->
+<div class="confirmation-message" id="confirmationMessage">
+    Carta enviada com sucesso!
+</div>
+
+<script>
+    // Lista de usuários com seus números de WhatsApp
+    const users = {
+        'Poetinha': { phone: '+558589069191', img: 'poetinha.jpg' },
+        'Patati': { phone: '+558699879689', img: 'patati.jpg' },
+        'Misol': { phone: '+558699576492', img: 'misol.jpg' },
+        'Flor': { phone: '+558388396341', img: 'flor.jpg' },
+        'Prin': { phone: '+5591911047874', img: 'prin.jpg' },
+        'BobZ': { phone: '+558699884130', img: 'bobz.jpg' }
+    };
+
+    const username = sessionStorage.getItem('username');  // Pega o nome do usuário logado
+
+    // Filtra os usuários para não incluir o usuário logado
+    const filteredUsers = Object.keys(users).filter(user => user !== username);
+
+    // Exibe a lista de usuários
+    const userList = document.getElementById('userList');
+    filteredUsers.forEach(user => {
+        const userItem = document.createElement('div');
+        userItem.classList.add('user-item');
+        userItem.innerHTML = `
+            <img src="${users[user].img}" alt="${user}">
+            <p onclick="openLetterPage('${user}')">${user}</p>
+        `;
+        userList.appendChild(userItem);
+    });
+
+    // Função que abre a página de escrever a carta
+    function openLetterPage(user) {
+        document.getElementById('userList').style.display = 'none';  // Esconde a lista de usuários
+        document.getElementById('sendMessage').style.display = 'block';  // Mostra o formulário de carta
+        window.currentUser = user;  // Armazena o nome do destinatário
+    }
+
+    // Função que retorna para a página de seleção de usuários
+    function goBackToUserList() {
+        document.getElementById('sendMessage').style.display = 'none';  // Esconde a página de carta
+        document.getElementById('userList').style.display = 'block';  // Mostra a lista de usuários
+    }
+
+    // Função que envia a mensagem pelo WhatsApp
+    function sendMessage() {
+        const message = document.getElementById('messageText').value;
+        if (message.trim() === "") {
+            alert("Escreva algo antes de enviar.");
+            return;
+        }
+
+        // Substitui espaços por %20 e cria o link
+        const encodedMessage = encodeURIComponent(message);
+        const phone = users[window.currentUser].phone;
+
+        // Link de WhatsApp para enviar a mensagem
+        const whatsappLink = `https://wa.me/${phone}?text=${encodedMessage}`;
+
+        // Redireciona para o WhatsApp
+        window.location.href = whatsappLink;
+
+        // Exibe a mensagem de confirmação
+        document.getElementById('confirmationMessage').style.display = 'block';
+
+        // Esconde a página de escrita de carta
+        document.getElementById('sendMessage').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial - Bem-vindo</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fafafa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Estilo do container da tela inicial */
+        .home-container {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .user-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .user-profile img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .user-profile h2 {
+            color: #4CAF50;
+            font-size: 24px;
+            margin: 10px 0;
+        }
+
+        .user-profile p {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.5;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Botões principais */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .button-container button:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .home-container {
+                width: 90%;
+                padding: 15px;
+            }
+
+            .user-profile img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .user-profile h2 {
+                font-size: 20px;
+            }
+
+            .button-container button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="home-container">
+    <div class="user-profile" id="userProfile">
+        <img src="" alt="Foto de Perfil" id="profileImage">
+        <h2 id="userName">Bem-vindo(a), coleguinha!</h2>
+        <p id="userMessage">Olá, amigo(a). Desejo uma experiência acolhedora. Aqui, você encontrará um espaço dedicado para suas cartas e outras interações. Sinta-se à vontade para explorar!</p>
+    </div>
+
+    <div class="button-container">
+        <button onclick="toggleMusic()">Pausar/Ativar Música Tema</button>
+        <button onclick="showHelp()">Ajuda</button>
+        <button onclick="redirectToMinhasCartas()">Minhas Cartas</button>
+        <button onclick="sendLetter()">Enviar Carta</button>
+        <button onclick="redirectToYouTube()">Para Você</button>
+    </div>
+</div>
+
+<script>
+    const users = {
+        'Poetinha': {
+            name: 'Poetinha',
+            image: 'user0_perf.png',
+            message: 'Olá, Poetinha! Desejo uma experiência acolhedora. Que este espaço seja cheio de amor e inspiração para suas cartas.'
+        },
+        'Patati': {
+            name: 'Patati',
+            image: 'user1_perf.png',
+            message: 'Olá, Patati! Desejo uma experiência acolhedora. Que este seja um lugar de muito carinho e felicidade para você!'
+        },
+        'Misol': {
+            name: 'Misol',
+            image: 'user2_perf.png',
+            message: 'Olá, Misol, o primoso Raio de Sol! Desejo uma experiência acolhedora. Aqui você vai encontrar carinho e inspiração para suas cartas!'
+        },
+        'Flor': {
+            name: 'Flor',
+            image: 'user3_perf.png',
+            message: 'Olá, Flor! Desejo uma experiência acolhedora. Que a luz da sua presença ilumine esse espaço cheio de amor e cartas!'
+        },
+        'Prin': {
+            name: 'Prin',
+            image: 'user4_perf.png',
+            message: 'Olá, Prin! Desejo uma experiência acolhedora. Que você se sinta especial e inspirado aqui em nosso espaço!'
+        },
+        'BobZ': {
+            name: 'BobZ',
+            image: 'user5_perf.png',
+            message: 'Olá, BobZ! Desejo uma experiência acolhedora. Que você encontre aqui um lugar de carinho e momentos inesquecíveis!'
+        }
+    };
+
+    const username = sessionStorage.getItem('username');  // Pegando o usuário logado do localStorage
+    const user = users[username];
+
+    // Atualizando a página com as informações do usuário
+    document.getElementById('profileImage').src = user.image;
+    document.getElementById('userName').innerText = `Bem-vindo(a), ${user.name}!`;
+    document.getElementById('userMessage').innerText = user.message;
+
+    // Função para ativar/pausar música
+    let musicPlaying = false;
+    const themeMusic = new Audio('song_tema.mp3');
+    function toggleMusic() {
+        if (musicPlaying) {
+            themeMusic.pause();
+            musicPlaying = false;
+        } else {
+            themeMusic.play();
+            musicPlaying = true;
+        }
+    }
+
+    // Função para exibir a mensagem de ajuda
+    function showHelp() {
+        alert('Bem-vindo(a) ao nosso aplicativo interativo!\n\nAqui você pode:\n\n1. Pausar ou ativar a música tema clicando no botão "Pausar/Ativar Música Tema".\n2. Explorar suas cartas e interagir com outras pessoas clicando em "Minhas Cartas".\n3. Enviar novas cartas clicando em "Enviar Carta".\n4. Caso queira ser redirecionado para um vídeo dedicado a você, clique em "Para Você".\n\nCada ação tem seu propósito e estamos aqui para proporcionar uma experiência acolhedora, com muito carinho e inspiração. Sinta-se à vontade para explorar!\n\nQualquer dúvida, estamos aqui para ajudar!');
+    }
+
+    // Funções para navegação
+    function redirectToMinhasCartas() {
+        window.location.href = 'minhascartas.html';
+    }
+
+    function sendLetter() {
+        window.location.href = 'enviarCarta.html';
+    }
+
+    function redirectToYouTube() {
+        const userMessage = confirm('Ao apertar o botão "OK", você será redirecionado para um vídeo do YouTube, no qual o Poetinha dedica a você.');
+        if (userMessage) {
+            window.location.href = 'https://youtu.be/U3M33tm_Vtg?si=t_ne4cRlWDrzTpX_';
+        }
+    }
+</script>
+
+</body>
+</html>

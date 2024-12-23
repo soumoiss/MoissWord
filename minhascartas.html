@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Cartas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .header {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #28a745;
+        }
+
+        .card {
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            color: #28a745;
+            font-size: 1.2em;
+        }
+
+        .card p {
+            font-size: 1em;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        .btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Minhas Cartas</div>
+        <div id="userCard" class="card">
+            <!-- Carta será carregada aqui -->
+        </div>
+        <a href="home.html" class="btn">Voltar para a Página Inicial</a>
+    </div>
+
+    <script>
+        // Função para obter o usuário logado
+        const users = {
+            'Misol': {
+                name: 'Misol',
+                image: 'user2_perf.png',
+                letter: `Meu teimoso raio de sol, resumindo, Misol,
+                Eu queria expressar maior um pouco do carinho que tenho por você e o quanto eu te admiro, por isso, criei esse site para isso. Para te dizer o quanto eu te amo.
+                Infelizmente, não consigo te dizer com precisão, mas meu amor por você toca o céu infinito, de tão grande que é. 
+                Sua amizade é minha luz, você é meu sol. Que ilumina meu mundo escuro com seu sorriso radiante, com o brilho dos seus olhos. Você me enrola com seus cachos e enfeita minha vida com flores.
+                Escolher um amigo é fácil,
+                Escolher uma melhor amiga é diferente, escolher em quem confiar seus segredos, sentimentos, medos, desejos, sonhos e ambições é difícil. Eu escolho confiar em você. Eu quero que você esteja sempre do meu lado como a boa amiga que você é, e eu não quero me arrepender disso, não quero ter medo. Escolher a pessoa com quem dividir sua vida é difícil. Não é com todos que se compartilha o riso e o choro. Quando se tem um bom amigo, a vida se torna cheia de cor, tão viva e feliz, mas quando fazemos a escolha errada, a vida fica cinza. 
+                Eu acho que escolhi certo.
+                Estou morrendo de saudades.
+                Com todo amor e carinho do mundo,
+                Moisés.`
+            },
+            'Patati': {
+                name: 'Patati',
+                image: 'user1_perf.png',
+                letter: `Meu querido amigo Gabriel. 
+                Eu queria poder escrever de uma maneira que fosse possível explicar perfeitamente o meu sentimento, sem sobra de dúvidas do quanto você é especial para mim.
+                Na vida, todo mundo anseia por um vínculo sincero, uma amizade verdadeira. 
+                Por conexão.
+                Eu também sou assim e Deus colocou você em minha vida. Eu sou muito feliz por poder te chamar de meu amigo. Obrigado por tudo o que você já fez por mim e por todo o carinho e força da sua amizade. Sua amizade me deu forças em momentos de fraquezas e eu sou eternamente grato por isso.
+                Eu amo sua vida.
+                Com carinho,
+                Moisés.`
+            },
+            'Flor': {
+                name: 'Flor',
+                image: 'user3_perf.png',
+                letter: `Querida Flor,
+                Queria dizer o quanto te amo, por isso programei um código e criei esse site.
+                Sua amizade sempre foi como um refúgio pra mim, minha criadora de emoções. Nunca te vi, mas, já compartilhamos tanto da nossa vida um para o outro que você não é mais uma estranha, você é um pedaço do meu coração. Já compartilhamos risos e choros, momentos de alegria e felicidade, de conquistas e derrotas. Já ficamos doentes e nos curamos.
+                Mas permanecemos juntos, depois de tudo isso, tenho certeza que foi Deus quem nos uniu.
+                Obrigado por sempre estar comigo. 
+                Vou sempre te amar.
+                Pra sempre a gente,
+                Com carinho, Moisés.`
+            },
+            'Prin': {
+                name: 'Prin',
+                image: 'user4_perf.png',
+                letter: `Minha princesinha,
+                Queria dizer o quanto te amo, por isso programei um código e criei esse site.
+                No início, não achei que conseguiria manter uma amizade com você. Realmente pensei que seria apenas alguns dias de conversa e depois não nos falariamos, mas, pra mostrar como imaginei errado, cá estou eu escrevendo essa carta.
+                Obrigado por sempre lembrar de mim e por me fazer rir. Eu amo seu jeitinho de ser você. Obrigado por me oferecer sua amizade, realmente espero que a minha seja sempre um refúgio pra você.
+                Espero que um dia possamos nos conhecer e rir de bobagens olhando nos olhos um do outro.
+                Eu te amo muito.
+                Palavras são poucas para descrever com precisão.
+                Com todo o meu amor,
+                Moisés.`
+            },
+            'BobZ': {
+                name: 'BobZ',
+                image: 'user5_perf.png',
+                letter: `Meu grande amigo Bob,
+                Você é o meu melhor amigo, e não existe amizade que eu valorize mais. 
+                Quero que saiba que sempre vou estar aqui por você, independentemente das circunstâncias. 
+                Pode contar comigo para tudo, porque eu sei que também posso contar com você para tantas coisas.
+                Sua amizade tem sido um verdadeiro presente na minha vida. 
+                Sempre que estou com você sua presença me faz muito mais feliz. 
+                Sua companhia é algo que nunca quero perder.
+                Eu tenho a certeza de que, quando nós estivermos bem velhinhos, eu ainda vou poder olhar para você e chamar você de meu amigo. 
+                A nossa amizade vai durar para sempre, e vou guardá-la no meu coração.
+                Com todo o meu carinho , Moisés.`
+            }
+        };
+
+        // Recuperando o usuário logado
+        const username = sessionStorage.getItem('username'); // Obtendo o usuário logado
+        const user = users[username]; // Obtendo os dados do usuário logado
+
+        // Atualizando o conteúdo da página com a carta correspondente
+        const userCard = document.getElementById('userCard');
+        if (user) {
+            userCard.innerHTML = `
+                <img src="${user.image}" alt="${user.name}" />
+                <h3>Carta enviada por Moisés, o poetinha:</h3>
+                <p>${user.letter}</p>
+            `;
+        } else {
+            userCard.innerHTML = '<p>Usuário não encontrado.</p>';
+        }
+    </script>
+</body>
+</html>
